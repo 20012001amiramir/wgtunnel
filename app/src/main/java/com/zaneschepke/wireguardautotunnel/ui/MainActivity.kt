@@ -49,6 +49,7 @@ import com.zaneschepke.wireguardautotunnel.ui.common.prompt.CustomSnackBar
 import com.zaneschepke.wireguardautotunnel.ui.common.snackbar.SnackbarControllerProvider
 import com.zaneschepke.wireguardautotunnel.ui.screens.config.ConfigScreen
 import com.zaneschepke.wireguardautotunnel.ui.screens.main.MainScreen
+import com.zaneschepke.wireguardautotunnel.ui.screens.main.VPNApp
 import com.zaneschepke.wireguardautotunnel.ui.screens.options.OptionsScreen
 import com.zaneschepke.wireguardautotunnel.ui.screens.pinlock.PinLockScreen
 import com.zaneschepke.wireguardautotunnel.ui.screens.settings.SettingsScreen
@@ -168,11 +169,7 @@ class MainActivity : AppCompatActivity() {
 									)
 								}
 								composable<Route.Support> {
-									SupportScreen(
-										focusRequester = focusRequester,
-										navController = navController,
-										appUiState = appUiState,
-									)
+									VPNApp()
 								}
 								composable<Route.Logs> {
 									LogsScreen()

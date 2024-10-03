@@ -147,7 +147,18 @@ dependencies {
 	implementation(libs.androidx.compose.ui.tooling.preview)
 	implementation(libs.androidx.material3)
 	implementation(libs.androidx.appcompat)
+	implementation (libs.google.accompanist.systemuicontroller)
+	implementation(libs.haze)
+	implementation(libs.haze.materials)
 
+	//retrofit
+	implementation(libs.retrofit2)
+	implementation(libs.retrofit2.converter)
+	implementation(libs.stetho.facebook)
+	implementation(libs.stetho.urlconnection)
+	implementation(libs.stetho.okhttp3)
+	debugImplementation(libs.androidx.ui.tooling.v170)
+	implementation(libs.androidx.ui.tooling.preview.v170)
 	// test
 	testImplementation(libs.junit)
 	testImplementation(libs.androidx.junit)

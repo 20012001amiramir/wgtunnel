@@ -22,9 +22,11 @@ import com.zaneschepke.wireguardautotunnel.util.StringValue
 import com.zaneschepke.wireguardautotunnel.util.extensions.toWgQuickString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.File
 import java.io.InputStream
 import java.util.zip.ZipInputStream
 import javax.inject.Inject
@@ -144,7 +146,8 @@ constructor(
 		kotlin.runCatching {
 			if (!isValidUriContentScheme(uri)) throw InvalidFileExtensionException
 			val fileName = getFileName(context, uri)
-			when (getFileExtensionFromFileName(fileName)) {
+			val fileDot = getFileExtensionFromFileName(fileName)
+			when (fileDot) {
 				Constants.CONF_FILE_EXTENSION ->
 					saveTunnelFromConfUri(fileName, uri, context)
 				Constants.ZIP_FILE_EXTENSION ->
@@ -229,12 +232,24 @@ constructor(
 	}
 
 	private fun isValidUriContentScheme(uri: Uri): Boolean {
-		return uri.scheme == Constants.URI_CONTENT_SCHEME
+		return uri.scheme == Constants.URI_CONTENT_SCHEME || uri.scheme == "file"
 	}
 
+
 	private fun getFileName(context: Context, uri: Uri): String {
-		return getFileNameByCursor(context, uri) ?: NumberUtils.generateRandomTunnelName()
+		return if (uri.scheme == "content") {
+			// Используем ContentResolver для извлечения имени файла
+			getFileNameByCursor(context, uri)
+				?: NumberUtils.generateRandomTunnelName()
+		} else if (uri.scheme == "file") {
+			// Извлекаем имя файла напрямую из пути
+			File(uri.path ?: "").name
+		} else {
+			// Если схема неизвестна, создаем случайное имя файла
+			NumberUtils.generateRandomTunnelName()
+		}
 	}
+
 
 	private fun getNameFromFileName(fileName: String): String {
 		return fileName.substring(0, fileName.lastIndexOf('.'))
@@ -261,4 +276,26 @@ constructor(
 			)
 		}
 	}
+
+	fun fetchVpnConfig(id: String, onConfigFetched: (Uri?) -> Unit) {
+		viewModelScope.launch {
+			try {
+				// Выполняем запрос на получение конфигурации VPN
+				val vpnConfig = withContext(ioDispatcher) {
+					// Предполагаем, что в репозитории есть метод, который получает конфигурацию
+					appDataRepository.wireguardApi.fetchAndSaveConfigToFile(id)
+				}
+				// Возвращаем полученную конфигурацию в callback
+				if (vpnConfig != null) run {
+					onConfigFetched(vpnConfig)
+				}
+			} catch (e: Exception) {
+				Timber.e(e, "Не удалось получить конфигурацию VPN")
+				// В случае ошибки возвращаем null или выполняем другой код обработки
+				onConfigFetched(null)
+			}
+		}
+	}
+
+
 }

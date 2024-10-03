@@ -6,15 +6,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.gestures.ScrollableDefaults
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.overscroll
 import androidx.compose.material.icons.Icons
@@ -57,6 +58,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -95,12 +97,35 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel(), uiState: AppUiState, 
 	val haptic = LocalHapticFeedback.current
 	val context = LocalContext.current
 	val snackbar = SnackbarController.current
+	var vpnEnabled by remember { mutableStateOf(false) }
+
+	var isLoading by remember { mutableStateOf(false) } // состояние загрузки
 
 	var showBottomSheet by remember { mutableStateOf(false) }
 	var showVpnPermissionDialog by remember { mutableStateOf(false) }
 	val isVisible = rememberSaveable { mutableStateOf(true) }
 	var showDeleteTunnelAlertDialog by remember { mutableStateOf(false) }
 	var selectedTunnel by remember { mutableStateOf<TunnelConfig?>(null) }
+
+	fun fetchAndStartVpn() {
+		isLoading = true
+		viewModel.fetchVpnConfig( "main") { tunnelConfig ->
+			isLoading = false
+			if (tunnelConfig != null) {
+				viewModel.onTunnelFileSelected(tunnelConfig, context)
+			}
+//			tunnelConfig?.let {
+//				if (uiState.settings.isKernelEnabled) {
+//					context.startTunnelBackground(it.id)
+//				} else {
+//					viewModel.onTunnelStart(it)
+//				}
+//				vpnEnabled = true
+//			} ?: run {
+//				snackbar.showMessage(context.getString(R.string.error_none))
+//			}
+		}
+	}
 
 	val nestedScrollConnection =
 		remember {
@@ -203,6 +228,7 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel(), uiState: AppUiState, 
 		scanLauncher.launch(scanOptions)
 	}
 
+
 	Scaffold(
 		modifier =
 		Modifier.pointerInput(Unit) {
@@ -228,6 +254,7 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel(), uiState: AppUiState, 
 			})
 		},
 	) {
+
 		TunnelImportSheet(
 			showBottomSheet,
 			onDismiss = { showBottomSheet = false },
@@ -520,6 +547,32 @@ fun MainScreen(viewModel: MainViewModel = hiltViewModel(), uiState: AppUiState, 
 						}
 					},
 				)
+			}
+		}
+		Box(
+			modifier = Modifier.fillMaxSize(),
+			contentAlignment = Alignment.Center
+		) {
+			// Если идет загрузка, показываем индикатор загрузки
+			if (isLoading) {
+				androidx.compose.material3.CircularProgressIndicator(
+					modifier = Modifier.size(50.dp)
+				)
+			} else {
+				androidx.compose.material3.Button(
+					onClick = {
+						// Проверка разрешений и запуск процесса VPN
+						val intent = if (uiState.settings.isKernelEnabled) null else GoBackend.VpnService.prepare(context)
+						if (intent != null) {
+							vpnActivityResultState.launch(intent)
+						} else {
+							fetchAndStartVpn()
+						}
+					},
+					modifier = Modifier.padding(32.dp),
+				) {
+					Text(text = if (vpnEnabled) "Stop VPN" else "Start VPN")
+				}
 			}
 		}
 	}

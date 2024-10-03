@@ -3,6 +3,7 @@ package com.zaneschepke.wireguardautotunnel
 import android.app.Application
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
+import com.facebook.stetho.Stetho
 import com.zaneschepke.logcatter.LocalLogCollector
 import com.zaneschepke.wireguardautotunnel.module.ApplicationScope
 import com.zaneschepke.wireguardautotunnel.module.IoDispatcher
@@ -31,6 +32,7 @@ class WireGuardAutoTunnel : Application() {
 
 	override fun onCreate() {
 		super.onCreate()
+		Stetho.initializeWithDefaults(this)
 		instance = this
 		if (BuildConfig.DEBUG) {
 			Timber.plant(Timber.DebugTree())
