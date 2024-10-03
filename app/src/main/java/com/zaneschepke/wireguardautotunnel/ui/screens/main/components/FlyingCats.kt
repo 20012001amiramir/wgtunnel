@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -17,8 +18,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.random.Random
-
-
 @Composable
 fun FlyingCats(catImages: List<Painter>) {
 	// Получаем размер экрана текущего устройства
@@ -26,7 +25,10 @@ fun FlyingCats(catImages: List<Painter>) {
 	val screenWidth = configuration.screenWidthDp.toFloat()
 	val screenHeight = configuration.screenHeightDp.toFloat()
 
-	catImages.forEach { catImage ->
+	// Список для отслеживания активных котов
+	val activeCats = remember { mutableStateListOf<Int>() }
+
+	catImages.forEachIndexed { index, catImage ->
 		// Размер кота
 		val catSize = (120).dp
 
@@ -35,6 +37,9 @@ fun FlyingCats(catImages: List<Painter>) {
 		val offsetY = remember { Animatable(0f) }
 		val rotation = remember { Animatable(0f) }
 		val alpha = remember { Animatable(0f) }
+
+		// Определяем направление вращения (-1 для против часовой стрелки, 1 для по часовой)
+		val rotationDirection = if (Random.nextBoolean()) 1 else -1
 
 		LaunchedEffect(Unit) {
 			while (true) {
@@ -76,6 +81,9 @@ fun FlyingCats(catImages: List<Painter>) {
 					}
 				}
 
+				// Добавляем кота в активные
+				activeCats.add(index)
+
 				// Устанавливаем начальные значения
 				offsetX.snapTo(startX)
 				offsetY.snapTo(startY)
@@ -111,36 +119,43 @@ fun FlyingCats(catImages: List<Painter>) {
 					)
 				}
 
+				// Вращение с разным направлением
 				launch {
 					rotation.animateTo(
-						targetValue = 360f,
+						targetValue = 360f * rotationDirection,
 						animationSpec = tween(
-							durationMillis = max(offX,offY), // Вращение за весь полет
+							durationMillis = max(offX, offY), // Вращение за весь полет
 							easing = LinearEasing
 						)
 					)
 				}
 
 				// Ждем, пока кот закончит полет
-				kotlinx.coroutines.delay(max(offX,offY).toLong())
+				kotlinx.coroutines.delay(max(offX, offY).toLong())
 
-				// Скрываем кота после завершения полета
+				// Скрываем кота после завершения полета и удаляем из активных
 				alpha.animateTo(targetValue = 0f, animationSpec = tween(durationMillis = 500))
+				activeCats.remove(index) // Убираем кота из активных после завершения полета
 			}
 		}
 
-		// Отрисовываем кота с анимацией перемещения и вращения
-		Image(
-			painter = catImage,
-			contentDescription = "Flying Cat",
-			modifier = Modifier
-				.offset(x = offsetX.value.dp, y = offsetY.value.dp)
-				.size(catSize) // Фиксированный размер кота
-				.graphicsLayer(
-					rotationZ = rotation.value, // Вращение кота
-					alpha = alpha.value // Контроль прозрачности
-				)
-		)
+		// Отрисовываем кота только если он в списке активных
+		if (activeCats.contains(index)) {
+			Image(
+				painter = catImage,
+				contentDescription = "Flying Cat",
+				modifier = Modifier
+					.offset(x = offsetX.value.dp, y = offsetY.value.dp)
+					.size(catSize) // Фиксированный размер кота
+					.graphicsLayer(
+						rotationZ = rotation.value, // Вращение кота
+						alpha = alpha.value // Контроль прозрачности
+					)
+			)
+		}
 	}
 }
+
+
+
 

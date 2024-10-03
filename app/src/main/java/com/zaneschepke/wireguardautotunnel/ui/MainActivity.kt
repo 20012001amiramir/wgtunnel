@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 								)
 							}
 						},
-						containerColor = MaterialTheme.colorScheme.background,
+						containerColor = Color.Transparent,
 						modifier =
 						Modifier
 							.focusable()
@@ -146,7 +147,11 @@ class MainActivity : AppCompatActivity() {
 							)
 						},
 					) { padding ->
-						Surface(modifier = Modifier.fillMaxSize().padding(padding)) {
+						Surface(
+							modifier = Modifier
+								.fillMaxSize()
+								.background(Color.Transparent)
+						) {
 							NavHost(
 								navController,
 								enterTransition = { fadeIn(tween(Constants.TRANSITION_ANIMATION_TIME)) },
@@ -154,11 +159,7 @@ class MainActivity : AppCompatActivity() {
 								startDestination = (if (isPinLockEnabled == true) Route.Lock else Route.Main),
 							) {
 								composable<Route.Main> {
-									MainScreen(
-										focusRequester = focusRequester,
-										uiState = appUiState,
-										navController = navController,
-									)
+									VPNApp()
 								}
 								composable<Route.Settings> {
 									SettingsScreen(
@@ -169,7 +170,11 @@ class MainActivity : AppCompatActivity() {
 									)
 								}
 								composable<Route.Support> {
-									VPNApp()
+									MainScreen(
+										focusRequester = focusRequester,
+										uiState = appUiState,
+										navController = navController,
+									)
 								}
 								composable<Route.Logs> {
 									LogsScreen()
