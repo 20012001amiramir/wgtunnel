@@ -11,7 +11,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.QuestionMark
@@ -54,7 +53,7 @@ import com.zaneschepke.wireguardautotunnel.ui.screens.main.VPNApp
 import com.zaneschepke.wireguardautotunnel.ui.screens.options.OptionsScreen
 import com.zaneschepke.wireguardautotunnel.ui.screens.pinlock.PinLockScreen
 import com.zaneschepke.wireguardautotunnel.ui.screens.settings.SettingsScreen
-import com.zaneschepke.wireguardautotunnel.ui.screens.support.SupportScreen
+import com.zaneschepke.wireguardautotunnel.ui.screens.settings.SettingsViewModel
 import com.zaneschepke.wireguardautotunnel.ui.screens.support.logs.LogsScreen
 import com.zaneschepke.wireguardautotunnel.ui.theme.WireguardAutoTunnelTheme
 import com.zaneschepke.wireguardautotunnel.util.Constants

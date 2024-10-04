@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WG Tunnel</string>
+    <string name="app_name">CatVpn</string>
     <string name="error_file_extension">Datei ist keine .conf oder .zip</string>
     <string name="no_tunnels">Noch keine Tunnel hinzugefügt!</string>
     <string name="watcher_notification_text_active">Überwachung der Netzwerkänderungen: aktiv</string>
@@ -22,7 +22,7 @@
     <string name="add_trusted_ssid">Vertrauenswürdigen WLAN-Namen hinzufügen</string>
     <string name="prominent_background_location_message">Diese Funktion erfordert die Erlaubnis zur Standortbestimmung im Hintergrund, um die Überwachung der WLAN SSID zu ermöglichen, auch wenn die Anwendung geschlossen ist. Weitere Einzelheiten in den Datenschutzbestimmungen, die auf dem Support-Bildschirm verlinkt sind.</string>
     <string name="prominent_background_location_title">Vereinbarung der Standortberechtigung im Hintergrund</string>
-    <string name="thank_you">Danke fürs Benutzen von WG Tunnel!</string>
+    <string name="thank_you">Danke fürs Benutzen von CatVpn!</string>
     <string name="trusted_ssid_empty_description">SSID eingeben</string>
     <string name="trusted_ssid_value_description">SSID bestätigen</string>
     <string name="add_tunnels_text">Von Datei oder ZIP hinzufügen</string>
@@ -85,7 +85,7 @@
     <string name="enabled_app_shortcuts">App-Verknüpfungen aktivieren</string>
     <string name="exported_configs_message">Konfigurationen in Download Ordner exportiert</string>
     <string name="tunnel_on_wifi">Tunnel bei nicht vertrauenswürdigem WLAN</string>
-    <string name="email_subject">WG Tunnel Unterstützung</string>
+    <string name="email_subject">CatVpn Unterstützung</string>
     <string name="docs_description">Dokumentation lesen</string>
     <string name="email_description">Sende mir eine E-Mail</string>
     <string name="support_help_text">Bei Fehlern oder Verbesserungsvorschlägen stehen folgende Ressourcen zur Verfügung:</string>

@@ -2,7 +2,7 @@
 <resources>
     <string name="comma_separated_list">список розділений комами</string>
     <string name="no_tunnels">Тунелі ще не додані!</string>
-    <string name="app_name">WG Tunnel</string>
+    <string name="app_name">CatVpn</string>
     <string name="add_trusted_ssid">Додати ім\'я довіреної мережі Wi-Fi</string>
     <string name="tunnels">Тунелі</string>
     <string name="enable_auto_tunnel">Запустити авто-тунелі</string>
@@ -57,7 +57,7 @@
     <string name="notification_permission_required">Потрібен дозвіл на відображення сповіщень.</string>
     <string name="tunnel_mobile_data">Тунелювати мобільні дані</string>
 	<string name="privacy_policy">Переглянути політику конфіденційності</string>
-    <string name="thank_you">Спасибі за використання WG Tunnel!</string>
+    <string name="thank_you">Спасибі за використання CatVpn!</string>
     <string name="prominent_background_location_message">Дана функція потребує фоновий доступ до служби місцезнаходження для моніторингу назви мереж Wi-Fi навіть коли додаток закрито. Для отримання додаткової інформації прочитайте політику приватності на екрані Підтримки.</string>
     <string name="trusted_ssid_empty_description">Введіть SSID</string>
     <string name="add_tunnels_text">Додати з файлу або архіву</string>

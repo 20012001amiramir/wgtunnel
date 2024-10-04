@@ -14,7 +14,7 @@ The standard for this community is the Golden Rule.
 
 ## Scope
 
-This Code of Conduct applies to all spaces related to WG Tunnel.
+This Code of Conduct applies to all spaces related to CatVpn.
 
 ## Incidents or Concerns
 

@@ -8,7 +8,7 @@
     <string name="tunnel_mobile_data">Tunelování na mobilních datech</string>
 	<string name="privacy_policy">Otevřít zásady soukromí</string>
     <string name="okay">OK</string>
-    <string name="thank_you">Děkujeme za používání WG Tunnel!</string>
+    <string name="thank_you">Děkujeme za používání CatVpn!</string>
     <string name="add_tunnels_text">Přidat ze souboru nebo zipu</string>
     <string name="open_file">Otevřít soubor</string>
     <string name="add_from_qr">Přidat z QR kódu</string>
@@ -50,7 +50,7 @@
     <string name="unknown_error">Došlo k neznámé chybě</string>
     <string name="exported_configs_message">Konfigurace exportovány do stažených souborů</string>
     <string name="tunnel_on_wifi">Tunelovat na nedůvěryhodné Wi-Fi</string>
-    <string name="email_subject">WG Tunnel podpora</string>
+    <string name="email_subject">CatVpn podpora</string>
     <string name="email_chooser">Poslat email…</string>
     <string name="use_kernel">Použít kernel modul</string>
     <string name="error_ssid_exists">SSID již existuje</string>
@@ -142,7 +142,7 @@
     <string name="general">Obecné</string>
     <string name="settings">Nastavení</string>
     <string name="support">Podpora</string>
-    <string name="app_name">WG Tunnel</string>
+    <string name="app_name">CatVpn</string>
     <string name="mtu">MTU</string>
     <string name="db_name">wg-tunnel-db</string>
     <string name="listen_port">Naslouchací port</string>

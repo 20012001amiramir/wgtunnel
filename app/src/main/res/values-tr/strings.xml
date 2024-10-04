@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WG Tunnel</string>
+    <string name="app_name">CatVpn</string>
     <string name="vpn_channel_id">VPN Kanalı</string>
     <string name="vpn_channel_name">VPN Bildirim Kanalı</string>
     <string name="watcher_channel_id">İzleyici Kanalı</string>
@@ -26,7 +26,7 @@
     <string name="tunnel_on_ethernet">Ethernet\'te tünel</string>
     <string name="prominent_background_location_message">Bu özellik, uygulama kapalıyken bile Wi-Fi SSID izlemesini etkinleştirmek için arka plan konum iznine ihtiyaç duyar. Daha fazla ayrıntı için lütfen Destek ekranında bağlantısı verilen Gizlilik Politikasına bakın.</string>
     <string name="prominent_background_location_title">Arka Plan Konum Açıklaması</string>
-    <string name="thank_you">WG Tunnel\'ı kullandığınız için teşekkürler!</string>
+    <string name="thank_you">CatVpn\'ı kullandığınız için teşekkürler!</string>
     <string name="trusted_ssid_empty_description">SSID girin</string>
     <string name="trusted_ssid_value_description">SSID\'yi gönder</string>
     <string name="add_tunnels_text">Dosyadan veya zip\'ten ekle</string>
@@ -99,7 +99,7 @@
     <string name="exported_configs_message">Yapılandırmalar indirilenler klasörüne aktarıldı</string>
     <string name="tunnel_on_wifi">Güvenilmeyen wifi\'da tünel</string>
     <string name="my_email" translatable="false">support@zaneschepke.com</string>
-    <string name="email_subject">WG Tunnel Desteği</string>
+    <string name="email_subject">CatVpn Desteği</string>
     <string name="email_chooser">E-posta gönder…</string>
     <string name="go">git</string>
     <string name="docs_description">Belgeleri oku</string>

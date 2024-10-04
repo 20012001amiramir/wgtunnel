@@ -1,8 +1,13 @@
 package com.zaneschepke.wireguardautotunnel.ui.screens.settings
 
 import android.content.Context
+import android.content.res.Configuration
 import android.location.LocationManager
 import androidx.core.location.LocationManagerCompat
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wireguard.android.backend.WgQuickBackend
@@ -17,14 +22,18 @@ import com.zaneschepke.wireguardautotunnel.util.FileUtils
 import com.zaneschepke.wireguardautotunnel.util.StringValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -37,6 +46,40 @@ constructor(
 	private val fileUtils: FileUtils,
 	@IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
+
+
+
+	private val Context.dataStore by preferencesDataStore(name = "settings")
+
+	private val DARK_THEME_KEY = booleanPreferencesKey("dark_theme")
+
+	fun getDefaultTheme(context: Context): Boolean {
+		val nightModeFlags = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+		return when (nightModeFlags) {
+			Configuration.UI_MODE_NIGHT_YES -> true
+			else -> false
+		}
+	}
+
+	fun getDarkThemePreference(context: Context): Flow<Boolean> {
+		return context.dataStore.data
+			.catch { exception ->
+				if (exception is IOException) {
+					emit(emptyPreferences())
+				} else {
+					throw exception
+				}
+			}
+			.map { preferences ->
+				preferences[DARK_THEME_KEY] ?: false
+			}
+	}
+
+	fun saveDarkThemePreference(context: Context, isDarkTheme: Boolean) = viewModelScope.launch {
+		context.dataStore.edit { preferences ->
+			preferences[DARK_THEME_KEY] = isDarkTheme
+		}
+	}
 
 	private val _kernelSupport = MutableStateFlow(false)
 	val kernelSupport = _kernelSupport.asStateFlow()

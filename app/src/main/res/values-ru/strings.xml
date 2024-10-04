@@ -77,7 +77,7 @@
     <string name="error_file_extension">Файл не имеет расширение .conf или .zip</string>
     <string name="random">(случайно)</string>
     <string name="tunnel_start_text">Подключено к туннелю</string>
-    <string name="app_name">WG Tunnel</string>
+    <string name="app_name">CatVpn</string>
     <string name="vpn_channel_id">Канал VPN</string>
     <string name="vpn_channel_name">Канал уведомлений VPN</string>
     <string name="watcher_channel_id">Канал наблюдателя</string>
@@ -89,7 +89,7 @@
     <string name="disable_auto_tunnel">Остановить авто-туннель</string>
 	<string name="okay">Хорошо</string>
     <string name="prominent_background_location_title">Фоновая передача местоположения</string>
-    <string name="thank_you">Благодарим Вас за использование WG Tunnel!</string>
+    <string name="thank_you">Благодарим Вас за использование CatVpn!</string>
     <string name="trusted_ssid_value_description">Отправить SSID</string>
     <string name="trusted_ssid_empty_description">Введите SSID</string>
     <string name="add_tunnels_text">Добавить из файла или архива</string>
@@ -145,7 +145,7 @@
     <string name="error_file_format">некорректный формат конфигурации туннеля</string>
     <string name="background_location_required">Необходим фоновый доступ к местоположению</string>
     <string name="exported_configs_message">Экспорт конфигурации в Загрузки</string>
-    <string name="email_subject">Поддержка WG Tunnel</string>
+    <string name="email_subject">Поддержка CatVpn</string>
     <string name="go">вперёд</string>
     <string name="email_description">Отправить письмо автору</string>
     <string name="support_help_text">Если у Вас возникли проблемы, или появилась идея по улучшению, или Вы просто хотите пообщаться, используйте следующие ресурсы:</string>

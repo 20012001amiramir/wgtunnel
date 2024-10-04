@@ -39,7 +39,7 @@
     <string name="junk_packet_maximum_size">Tamanho máximo de pacote-lixo</string>
     <string name="init_packet_junk_size">Tamanho de pacote-lixo inicial</string>
     <string name="response_packet_junk_size">Tamanho de resposta de pacote-lixo</string>
-    <string name="app_name">WG Tunnel</string>
+    <string name="app_name">CatVpn</string>
     <string name="no_tunnels">Nenhum túnel foi adicionado!</string>
     <string name="error_file_extension">O arquivo não é .conf ou .zip</string>
     <string name="prominent_background_location_message">Este recurso precisa de permissões de localização em segundo plano para habilitar o monitoramento do SSID da rede Wi-Fi mesmo quando o aplicativo está fechado. Para mais detalhes, por favor veja a Política de Privacidade na tela de Suporte.</string>
@@ -57,7 +57,7 @@
     <string name="okay">OK</string>
     <string name="tunnel_mobile_data">Túnel em dados móveis</string>
 	<string name="prominent_background_location_title">Revelar a localização em segundo plano</string>
-    <string name="thank_you">Obrigado por usar o WG Tunnel!</string>
+    <string name="thank_you">Obrigado por usar o CatVpn!</string>
     <string name="trusted_ssid_value_description">Envie o SSID</string>
     <string name="open_file">Abrir Arquivo</string>
     <string name="add_from_qr">Adicionar a partir de código QR</string>
@@ -112,7 +112,7 @@
     <string name="precise_location_required">Necessita da localização precisa</string>
     <string name="exported_configs_message">Configurações exportadas para downloads</string>
     <string name="unknown_error">Ocorreu um erro desconhecido</string>
-    <string name="email_subject">Suporte para o WG Tunnel</string>
+    <string name="email_subject">Suporte para o CatVpn</string>
     <string name="tunnel_on_wifi">Túnel em Wi-Fi não confiável</string>
     <string name="error_none">Nenhum erro</string>
     <string name="delete_tunnel">Apagar túnel</string>

@@ -76,7 +76,7 @@ android {
 		debug {
 			applicationIdSuffix = ".debug"
 			versionNameSuffix = "-debug"
-			resValue("string", "app_name", "WG Tunnel - Debug")
+			resValue("string", "app_name", "CatVpn - Debug")
 			isDebuggable = true
 		}
 
@@ -84,14 +84,14 @@ android {
 			initWith(buildTypes.getByName(Constants.RELEASE))
 			applicationIdSuffix = ".prerelease"
 			versionNameSuffix = "-pre"
-			resValue("string", "app_name", "WG Tunnel - Pre")
+			resValue("string", "app_name", "CatVpn - Pre")
 		}
 
 		create(Constants.NIGHTLY) {
 			initWith(buildTypes.getByName(Constants.RELEASE))
 			applicationIdSuffix = ".nightly"
 			versionNameSuffix = "-nightly"
-			resValue("string", "app_name", "WG Tunnel - Nightly")
+			resValue("string", "app_name", "CatVpn - Nightly")
 		}
 
 		applicationVariants.all {

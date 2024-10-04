@@ -14,4 +14,4 @@ If you are experiencing issues with the app, the following resources are availab
   </li>
 </ol>
 
-Thank you for using WG Tunnel.
+Thank you for using CatVpn.

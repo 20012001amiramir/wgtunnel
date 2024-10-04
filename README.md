@@ -1,5 +1,5 @@
 <h1 align="center">
-WG Tunnel
+CatVpn
 </h1>
 
 <div align="center">
@@ -83,7 +83,7 @@ The repository for these docs can be found [here](https://github.com/zaneschepke
 
 This app is using [Weblate](https://weblate.org) to assist with translations.
 
-Help translate WG Tunnel into your language
+Help translate CatVpn into your language
 at [Hosted Weblate](https://hosted.weblate.org/engage/wg-tunnel/).\
 [![Translation status](https://hosted.weblate.org/widgets/wg-tunnel/-/multi-auto.svg)](https://hosted.weblate.org/engage/wg-tunnel/)
 

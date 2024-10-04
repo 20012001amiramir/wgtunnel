@@ -63,7 +63,7 @@
     <string name="okay">OK</string>
     <string name="tunnel_on_ethernet">Túnel en ethernet</string>
     <string name="prominent_background_location_title">Divulgación de la ubicación en segundo plano</string>
-    <string name="thank_you">¡Gracias por usar WG Tunnel!</string>
+    <string name="thank_you">¡Gracias por usar CatVpn!</string>
     <string name="endpoint">Endpoint</string>
     <string name="peer">Peer</string>
     <string name="name">Nombre</string>
@@ -98,7 +98,7 @@
     <string name="location_services_required">Se necesita servicio de ubicación</string>
     <string name="precise_location_required">Necesita ubicación precisa</string>
     <string name="unknown_error">Error desconocido</string>
-    <string name="email_subject">Ayuda WG Tunnel</string>
+    <string name="email_subject">Ayuda CatVpn</string>
     <string name="interface_">Interfaz</string>
     <string name="listen_port">Puerto de escucha</string>
     <string name="preshared_key">Clave previamente compartida</string>
@@ -144,7 +144,7 @@
     <string name="auto_tun_on">Reanudar el túnel automático</string>
     <string name="auto_tun_off">Pausa del túnel automático</string>
     <string name="settings">Ajustes</string>
-    <string name="app_name">WG Tunnel</string>
+    <string name="app_name">CatVpn</string>
     <string name="vpn_channel_id">Canal VPN</string>
     <string name="vpn_channel_name">Canal de notificación VPN</string>
     <string name="watcher_channel_id">Canal del obvervador</string>
