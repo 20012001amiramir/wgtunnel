@@ -150,6 +150,7 @@ dependencies {
 	implementation (libs.google.accompanist.systemuicontroller)
 	implementation(libs.haze)
 	implementation(libs.haze.materials)
+	implementation(libs.coil.compose)
 
 	//retrofit
 	implementation(libs.retrofit2)
@@ -157,6 +158,8 @@ dependencies {
 	implementation(libs.stetho.facebook)
 	implementation(libs.stetho.urlconnection)
 	implementation(libs.stetho.okhttp3)
+	implementation (libs.androidx.constraintlayout.compose)
+
 	debugImplementation(libs.androidx.ui.tooling.v170)
 	implementation(libs.androidx.ui.tooling.preview.v170)
 	// test

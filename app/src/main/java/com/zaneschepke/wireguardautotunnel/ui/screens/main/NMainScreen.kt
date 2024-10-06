@@ -1,6 +1,5 @@
 package com.zaneschepke.wireguardautotunnel.ui.screens.main
 
-import android.content.Context
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -11,31 +10,21 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Brightness2
 import androidx.compose.material.icons.filled.Download
@@ -56,7 +45,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,29 +53,27 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.zaneschepke.wireguardautotunnel.R
-import com.zaneschepke.wireguardautotunnel.ui.AppUiState
 import com.zaneschepke.wireguardautotunnel.ui.screens.main.components.FlyingCats
-import com.zaneschepke.wireguardautotunnel.ui.screens.main.components.LocationCards
 import com.zaneschepke.wireguardautotunnel.ui.screens.settings.SettingsViewModel
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
@@ -97,7 +83,6 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
-import kotlinx.serialization.json.JsonNull.content
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -172,8 +157,6 @@ fun VPNApp(
 				// Все содержимое, которое должно размываться, переносим сюда
 				BlurryCardContent(hazeState, darkTheme)
 
-
-				// Остальные элементы (которые не должны размываться)
 				Column(
 					modifier = Modifier
 						.padding(0.dp, 32.dp)
@@ -315,48 +298,154 @@ fun Offset.rotate(degrees: Float, pivot: Offset): Offset {
 }
 
 
-
 @Composable
 fun CentralArea(hazeState: HazeState, isConnecting: Boolean, onToggleConnecting: (Boolean) -> Unit) {
-	Row(
+
+	ConstraintLayout(
 		modifier = Modifier
-			.padding(25.dp, 0.dp)
-			.fillMaxWidth(),
-		horizontalArrangement = Arrangement.SpaceBetween,
-		verticalAlignment = Alignment.Top
+			.fillMaxSize()
 	) {
-		// Таймер как отдельная карточка
 
-		Column (
-			modifier = Modifier
-				.height(200.dp)
-				.wrapContentWidth(),
-			verticalArrangement = Arrangement.SpaceBetween,
-			horizontalAlignment = Alignment.Start
-		){
-			CentralCard(
-				height = 95.dp,
-				width = 200.dp,
-				content = { TimerContent(isConnecting) },
-				hazeState = hazeState,
-				modifier = Modifier.weight(1f)
-			)
-			CentralCard(
-				height = 95.dp,
-				width = 200.dp,
-				content = { TimerContent(isConnecting) },
-				hazeState = hazeState,
-				modifier = Modifier.weight(1f)
-			)
-		}
+		val (timerCard, countryCard, connectButton, map) = createRefs()
 
-		// Кнопка подключения как отдельная карточка
+
 		CentralCard(
-			height = 200.dp,
-			width = 200.dp,
+			content = { TimerContent(isConnecting) },
+			hazeState = hazeState,
+			modifier = Modifier.constrainAs(timerCard) {
+				top.linkTo(parent.top)
+				start.linkTo(parent.start)
+				end.linkTo(connectButton.start)
+				bottom.linkTo(countryCard.top)
+				width = Dimension.fillToConstraints
+				height = Dimension.fillToConstraints
+			}
+		)
+
+		CentralCard(
+			content = {
+				CountryContent(
+					countryCode = "RU",
+					countryName = "Russia",
+					ping = "04 ms",
+					isFastest = true
+				)
+			},
+			hazeState = hazeState,
+			modifier = Modifier.constrainAs(countryCard) {
+				top.linkTo(timerCard.bottom)
+				end.linkTo(connectButton.start)
+				start.linkTo(parent.start)
+				bottom.linkTo(map.top)
+				width = Dimension.fillToConstraints
+				height = Dimension.fillToConstraints
+			}
+		)
+
+
+		CentralCard(
 			content = { ConnectButton(hazeState, isConnecting, onToggleConnecting) },
 			hazeState = hazeState,
-			modifier = Modifier.weight(1f) // Равномерное распределение пространства
+			modifier = Modifier.constrainAs(connectButton) {
+				top.linkTo(parent.top)
+				start.linkTo(timerCard.end)
+				start.linkTo(countryCard.end)
+				end.linkTo(parent.end)
+				bottom.linkTo(map.top)
+				height = Dimension.fillToConstraints
+				width = Dimension.fillToConstraints
+			}
+		)
+
+		CentralCard(
+			content = {
+				Spacer(modifier = Modifier.fillMaxSize())
+			},
+			hazeState = hazeState,
+			modifier = Modifier.constrainAs(map) {
+				height = Dimension.fillToConstraints
+				top.linkTo(connectButton.bottom)
+				bottom.linkTo(parent.bottom)
+				start.linkTo(parent.start)
+				end.linkTo(parent.end)
+				width = Dimension.fillToConstraints
+			}
+		)
+
+	}
+}
+
+
+@Composable
+fun CountryContent(countryCode: String, countryName: String, ping: String, isFastest: Boolean) {
+	val flagUrl = "https://flagsapi.com/$countryCode/flat/64.png"
+
+	Row(
+		modifier = Modifier
+			.padding(10.dp)
+			.wrapContentWidth(),
+		verticalAlignment = Alignment.CenterVertically,
+		horizontalArrangement = Arrangement.SpaceBetween
+	) {
+		Row(verticalAlignment = Alignment.CenterVertically) {
+			AsyncImage(
+				model = flagUrl,
+				contentDescription = "Country Flag",
+				modifier = Modifier
+					.size(32.dp)
+					.clip(RoundedCornerShape(4.dp))
+			)
+			Spacer(modifier = Modifier.width(8.dp))
+			Column {
+				Row(verticalAlignment = Alignment.CenterVertically) {
+					Text(
+						text = "Auto",
+						style = MaterialTheme.typography.bodySmall.copy(
+							color = Color.LightGray,
+							fontSize = 12.sp
+						)
+					)
+					Spacer(modifier = Modifier.width(4.dp))
+					Text(
+						text = ping,
+						style = MaterialTheme.typography.bodySmall.copy(
+							color = Color.LightGray,
+							fontSize = 12.sp
+						)
+					)
+					Spacer(modifier = Modifier.width(4.dp))
+					Box(
+						modifier = Modifier
+							.background(Color(0xFFFFA000), RoundedCornerShape(8.dp))
+							.padding(horizontal = 6.dp, vertical = 2.dp)
+					) {
+						Text(
+							text = "Normal",
+							style = MaterialTheme.typography.bodySmall.copy(
+								color = Color.Black,
+								fontSize = 10.sp,
+								fontWeight = FontWeight.Bold
+							)
+						)
+					}
+
+				}
+				Text(
+					text = countryName,
+					style = MaterialTheme.typography.bodyLarge.copy(
+						fontWeight = FontWeight.Bold,
+						fontSize = 20.sp,
+						color = MaterialTheme.colorScheme.onSurface
+					),
+					textAlign = TextAlign.Start
+				)
+			}
+		}
+		Icon(
+			modifier = Modifier.padding(15.dp,0.dp,0.dp,0.dp),
+			imageVector = Icons.Default.Settings,
+			contentDescription = null,
+			tint = Color.LightGray
 		)
 	}
 }
@@ -457,9 +546,8 @@ fun StatusCard(height: Dp,width: Dp,icon: ImageVector, value: String, label: Str
 	}
 }
 
-
 @Composable
-fun CentralCard(height : Dp, width: Dp, content: @Composable () -> Unit, hazeState: HazeState, modifier: Modifier = Modifier) {
+fun CentralCard(content: @Composable () -> Unit, hazeState: HazeState, modifier: Modifier = Modifier) {
 	val backgroundGradient = Brush.linearGradient(
 		colors = listOf(
 			Color.White.copy(alpha = 0.3f),
@@ -468,28 +556,28 @@ fun CentralCard(height : Dp, width: Dp, content: @Composable () -> Unit, hazeSta
 	)
 
 	Box(
-		modifier = Modifier
-			.width(width)
-			.height(height)
+		modifier = modifier
+			.fillMaxWidth()
+			.fillMaxHeight()
 	) {
-		// Добавляем эффект размытия только для фона
-		Box(
-			modifier = Modifier
-				.fillMaxSize()
-				.haze(hazeState)
-				.border(
-					width = 2.dp,
-					brush = backgroundGradient,
-					shape = RoundedCornerShape(16.dp)
-				)
-				.background(
-					brush = backgroundGradient,
-					shape = RoundedCornerShape(16.dp)
-				)
-		)
+//		Box(
+//			modifier = Modifier
+//				.fillMaxSize()
+//				.haze(hazeState)
+//				.border(
+//					width = 2.dp,
+//					brush = backgroundGradient,
+//					shape = RoundedCornerShape(16.dp)
+//				)
+//				.background(
+//					brush = backgroundGradient,
+//					shape = RoundedCornerShape(16.dp)
+//				)
+//		)
 		Card(
 			modifier = Modifier
-				.fillMaxSize()
+				.wrapContentHeight()
+				.fillMaxWidth()
 				.hazeChild(
 					state = hazeState,
 					style = HazeStyle(
@@ -502,12 +590,12 @@ fun CentralCard(height : Dp, width: Dp, content: @Composable () -> Unit, hazeSta
 		) {
 			Column(
 				modifier = Modifier
-					.fillMaxSize()
+					.wrapContentHeight()
+					.fillMaxWidth()
 					.padding(12.dp),
 				verticalArrangement = Arrangement.Center,
 				horizontalAlignment = Alignment.CenterHorizontally
 			) {
-				// Контент карточки
 				content()
 			}
 		}

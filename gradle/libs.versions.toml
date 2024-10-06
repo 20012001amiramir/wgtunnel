@@ -6,6 +6,8 @@ amneziawgAndroid = "1.2.2"
 androidx-junit = "1.2.1"
 appcompat = "1.7.0"
 biometricKtx = "1.2.0-alpha05"
+coilCompose = "2.0.0"
+constraintlayoutComposeVersion = "1.0.1"
 coreGoogleShortcuts = "1.1.0"
 coreKtx = "1.13.1"
 datastorePreferences = "1.1.1"
@@ -39,6 +41,8 @@ material = "1.12.0"
 gradlePlugins-ktlint="12.1.1"
 retrofitVersion="2.9.0"
 stethoVersion="1.6.0"
+constraintlayout = "2.1.4"
+constraintlayoutVersion = "2.0.1"
 
 [libraries]
 
@@ -50,6 +54,7 @@ accompanist-permissions = { module = "com.google.accompanist:accompanist-permiss
 #room
 amneziawg-android = { module = "com.zaneschepke:amneziawg-android", version.ref = "amneziawgAndroid" }
 androidx-biometric-ktx = { module = "androidx.biometric:biometric-ktx", version.ref = "biometricKtx" }
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutComposeVersion" }
 androidx-core = { module = "androidx.core:core", version.ref = "coreKtx" }
 androidx-core-google-shortcuts = { module = "androidx.core:core-google-shortcuts", version.ref = "coreGoogleShortcuts" }
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -73,6 +78,7 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compos
 androidx-ui-tooling-preview-v170 = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
 #noinspection SimilarGradleDependency
 androidx-ui-tooling-v170 = { module = "androidx.compose.ui:ui-tooling", version.ref = "uiTooling" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontrollerVersion" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
@@ -111,6 +117,8 @@ tunnel = { module = "com.zaneschepke:wireguard-android", version.ref = "tunnel" 
 
 zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayoutVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
