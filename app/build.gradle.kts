@@ -159,6 +159,7 @@ dependencies {
 	implementation(libs.stetho.urlconnection)
 	implementation(libs.stetho.okhttp3)
 	implementation (libs.androidx.constraintlayout.compose)
+	implementation (libs.touchlane.gridpad)
 
 	debugImplementation(libs.androidx.ui.tooling.v170)
 	implementation(libs.androidx.ui.tooling.preview.v170)

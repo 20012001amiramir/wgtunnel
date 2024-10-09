@@ -59,6 +59,7 @@ import com.zaneschepke.wireguardautotunnel.ui.theme.WireguardAutoTunnelTheme
 import com.zaneschepke.wireguardautotunnel.util.Constants
 import com.zaneschepke.wireguardautotunnel.util.extensions.requestTunnelTileServiceStateUpdate
 import dagger.hilt.android.AndroidEntryPoint
+import dev.chrisbanes.haze.HazeState
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -68,6 +69,9 @@ class MainActivity : AppCompatActivity() {
 
 	@Inject
 	lateinit var tunnelService: TunnelService
+
+	@Inject
+	lateinit var hazeState: HazeState
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -125,6 +129,7 @@ class MainActivity : AppCompatActivity() {
 							},
 						bottomBar = {
 							BottomNavBar(
+								hazeState,
 								navController,
 								listOf(
 									BottomNavItem(
@@ -158,7 +163,7 @@ class MainActivity : AppCompatActivity() {
 								startDestination = (if (isPinLockEnabled == true) Route.Lock else Route.Main),
 							) {
 								composable<Route.Main> {
-									VPNApp()
+									VPNApp(hazeState)
 								}
 								composable<Route.Settings> {
 									SettingsScreen(

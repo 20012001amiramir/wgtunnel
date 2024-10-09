@@ -16,6 +16,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.chrisbanes.haze.HazeState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Provider
@@ -75,4 +76,11 @@ class TunnelModule {
 			ioDispatcher,
 		)
 	}
+
+	@Provides
+	@Singleton
+	fun provideHazeState(): HazeState {
+		return HazeState()
+	}
+
 }

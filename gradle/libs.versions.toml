@@ -13,6 +13,7 @@ coreKtx = "1.13.1"
 datastorePreferences = "1.1.1"
 desugar_jdk_libs = "2.1.2"
 espressoCore = "3.6.1"
+gridpadVersion = "1.1.0"
 haze = "0.7.3"
 hiltAndroid = "2.52"
 hiltNavigationCompose = "1.2.0"
@@ -113,6 +114,7 @@ material-icons-extended = { module = "androidx.compose.material:material-icons-e
 
 pin-lock-compose = { module = "com.zaneschepke:pin_lock_compose", version.ref = "pinLockCompose" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+touchlane-gridpad = { module = "com.touchlane:gridpad", version.ref = "gridpadVersion" }
 tunnel = { module = "com.zaneschepke:wireguard-android", version.ref = "tunnel" }
 
 zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
