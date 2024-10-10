@@ -3,6 +3,7 @@ accompanist = "0.36.0"
 accompanistSystemuicontrollerVersion = "0.30.1"
 activityCompose = "1.9.2"
 amneziawgAndroid = "1.2.2"
+androidSdk = "11.5.1"
 androidx-junit = "1.2.1"
 appcompat = "1.7.0"
 biometricKtx = "1.2.0-alpha05"
@@ -19,9 +20,12 @@ hiltAndroid = "2.52"
 hiltNavigationCompose = "1.2.0"
 junit = "4.13.2"
 kotlinx-serialization-json = "1.7.3"
+kotlinxCoroutinesPlayServices = "1.7.3"
 lifecycle-runtime-compose = "2.8.6"
+maplibreCompose = "0.0.16"
+mapsMobile = "4.8.0-lite"
 material3 = "1.3.0"
-navigationCompose = "2.8.1"
+navigationCompose = "2.8.2"
 pinLockCompose = "1.0.3"
 roomVersion = "2.6.1"
 timber = "5.0.1"
@@ -29,10 +33,10 @@ tunnel = "1.2.1"
 androidGradlePlugin = "8.6.1"
 kotlin = "2.0.20"
 ksp = "2.0.20-1.0.25"
-composeBom = "2024.09.02"
-compose = "1.7.2"
+composeBom = "2024.09.03"
+compose = "1.7.3"
 uiTooling = "1.7.0"
-uiToolingPreview = "1.7.0"
+uiToolingPreview = "1.7.3"
 zxingAndroidEmbedded = "4.3.0"
 coreSplashscreen = "1.0.1"
 gradlePlugins-grgit = "5.2.2"
@@ -40,10 +44,11 @@ gradlePlugins-grgit = "5.2.2"
 #plugins
 material = "1.12.0"
 gradlePlugins-ktlint="12.1.1"
-retrofitVersion="2.9.0"
+retrofitVersion="2.11.0"
 stethoVersion="1.6.0"
 constraintlayout = "2.1.4"
-constraintlayoutVersion = "2.0.1"
+constraintlayoutVersion = "2.1.4"
+material3Jvmstubs = "1.4.0-alpha01"
 
 [libraries]
 
@@ -83,6 +88,8 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose"
 google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontrollerVersion" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinxCoroutinesPlayServices" }
+maplibre-compose = { module = "io.github.rallista:maplibre-compose", version.ref = "maplibreCompose" }
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 retrofit2_converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 stetho_facebook = { module = "com.facebook.stetho:stetho", version.ref = "stethoVersion" }

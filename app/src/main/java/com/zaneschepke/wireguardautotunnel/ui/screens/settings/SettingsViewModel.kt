@@ -61,7 +61,7 @@ constructor(
 		}
 	}
 
-	fun getDarkThemePreference(context: Context): Flow<Boolean> {
+	fun getDarkThemePreference(context: Context): Flow<Boolean?> {
 		return context.dataStore.data
 			.catch { exception ->
 				if (exception is IOException) {
@@ -71,7 +71,7 @@ constructor(
 				}
 			}
 			.map { preferences ->
-				preferences[DARK_THEME_KEY] ?: false
+				preferences[DARK_THEME_KEY]
 			}
 	}
 

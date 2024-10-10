@@ -10,6 +10,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -19,7 +20,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -61,7 +61,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -69,19 +68,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ChainStyle
-import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.touchlane.gridpad.GridPad
-import com.touchlane.gridpad.GridPadCellSize
 import com.touchlane.gridpad.GridPadCells
 import com.zaneschepke.wireguardautotunnel.R
-import com.zaneschepke.wireguardautotunnel.ui.screens.main.components.FlyingCats
 import com.zaneschepke.wireguardautotunnel.ui.screens.settings.SettingsViewModel
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
@@ -91,8 +85,6 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.materials.HazeMaterials
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
-import kotlinx.serialization.json.Json.Default.configuration
-import kotlinx.serialization.json.JsonNull.content
 import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.sin
@@ -135,27 +127,29 @@ fun MyTheme(darkTheme: Boolean = false, content: @Composable () -> Unit) {
 	)
 }
 
+
+
 @Composable
 fun VPNApp(
 	hazeState: HazeState,
 	viewModel: SettingsViewModel = hiltViewModel(),
 ) {
 	// haze
+//	var mapViewCamera = rememberMapViewCamera()
+	darkTheme = isSystemInDarkTheme()
 	var isConnecting by rememberSaveable { mutableStateOf(false) }
+	var isDarkTheme by rememberSaveable { mutableStateOf(darkTheme) }
 	val context = LocalContext.current
-	val isDarkTheme by viewModel.getDarkThemePreference(context).collectAsState(
-		initial = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK == android.content.res.Configuration.UI_MODE_NIGHT_YES,
-	)
-	//TODO: Исправить мигание светлой черной темы, можно когда в будущем добавим лоадинг в самом начале
-	darkTheme = isDarkTheme
+
 
 	LaunchedEffect(Unit) {
 		val savedTheme = viewModel.getDarkThemePreference(context).first()
-		darkTheme = savedTheme
+		if (savedTheme != null) {
+			isDarkTheme = savedTheme
+		}
 	}
 
-
-	MyTheme(darkTheme = darkTheme) {
+	MyTheme(darkTheme = isDarkTheme) {
 		Box(
 			modifier = Modifier.fillMaxSize(),
 		) {
@@ -165,7 +159,7 @@ fun VPNApp(
 					.fillMaxSize(),
 			) {
 				// Все содержимое, которое должно размываться, переносим сюда
-				BlurryCardContent(hazeState, darkTheme)
+				BlurryCardContent(hazeState, isDarkTheme)
 
 				Column(
 					modifier = Modifier
@@ -173,13 +167,17 @@ fun VPNApp(
 						.fillMaxSize(),
 				) {
 
-					TopBar(darkTheme) {
+					TopBar(isDarkTheme) {
 						viewModel.saveDarkThemePreference(context, !isDarkTheme)
-						darkTheme = isDarkTheme
+						isDarkTheme = !isDarkTheme
 					}
 
 //					StatusBlock(hazeState, isConnecting)
 
+//					MapView(
+//						styleUrl = "https://demotiles.maplibre.org/style.json",
+//						camera = mapViewCamera
+//					)
 					CentralArea(hazeState, isConnecting) { isConnecting = it }
 //					LocationCards(hazeState)
 				}
@@ -188,6 +186,7 @@ fun VPNApp(
 
 		}
 	}
+
 }
 
 
@@ -365,6 +364,8 @@ fun CentralArea(hazeState: HazeState, isConnecting: Boolean, onToggleConnecting:
 
 	}
 }
+
+
 @Composable
 fun CountryContent(countryCode: String, countryName: String, ping: String, isFastest: Boolean) {
 	val flagUrl = "https://flagsapi.com/$countryCode/flat/64.png"

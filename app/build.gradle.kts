@@ -151,7 +151,6 @@ dependencies {
 	implementation(libs.haze)
 	implementation(libs.haze.materials)
 	implementation(libs.coil.compose)
-
 	//retrofit
 	implementation(libs.retrofit2)
 	implementation(libs.retrofit2.converter)
@@ -173,7 +172,8 @@ dependencies {
 	androidTestImplementation(libs.androidx.room.testing)
 	debugImplementation(libs.androidx.compose.ui.tooling)
 	debugImplementation(libs.androidx.compose.manifest)
-
+	implementation (libs.kotlinx.coroutines.play.services)
+	implementation(libs.maplibre.compose)
 	// get tunnel lib from github packages or mavenLocal
 // 	implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
 	implementation(libs.tunnel)

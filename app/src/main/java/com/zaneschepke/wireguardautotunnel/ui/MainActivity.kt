@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
 	@Inject
 	lateinit var hazeState: HazeState
 
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
